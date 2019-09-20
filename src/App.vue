@@ -1,6 +1,12 @@
 <template>
     <div id="app">
-        <Meeting />
+        <Meeting 
+            v-if="meeting"
+            v-on:close-meeting="reloadMeeting"
+        />
+        <div class="message" v-else>
+            <h3 class="yellow-text">The meeting has ended.</h3>
+        </div>
     </div>
 </template>
 
@@ -14,11 +20,19 @@ export default {
     },
     data() {
         return {
-            
+            meeting: true
         }
     },
     methods: {
-        
+        reloadMeeting() {
+            this.meeting = false
+
+            let scope = this
+
+            setTimeout(function() {
+                scope.meeting = true
+            }, 5000, scope)
+        }
     }
 }
 </script>
@@ -49,6 +63,11 @@ html, body {
     width: 100%;
     height: 100%;
     background: var(--black);
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
 }
 
 h1 {
@@ -175,6 +194,18 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
-    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+}
+
+.yellow-text {
+    color: var(--yellow);
+}
+
+.message {
+    display: grid;
+    height: 100%;
+    align-items: center;
+    text-align: center;
 }
 </style>

@@ -9,6 +9,7 @@
 	            v-on:joined-room="status = 'streaming'"
 	            v-on:left-room="logEvent"
 	            v-on:open-room="logEvent"
+	            v-if="status !== 'left'"
 	        >
 	        </vue-webrtc>
 		</header>
@@ -47,14 +48,18 @@ export default {
             this.$refs.webrtc.join()
         },
         leaveMeeting() {
-            this.status = 'disconnected'
+            this.status = 'left'
             this.$refs.webrtc.leave()
+            this.reload()
         },
         logError(error, stream) {
             console.log('On Error Event', error, stream)
         },
         logEvent(event) {
             console.log('Event : ', event)
+        },
+        reload() {
+        	this.$emit('close-meeting')
         }
     }
 }
@@ -64,7 +69,6 @@ export default {
 .container {
 	text-align: center;
 	height: 100%;
-	min-height: 100vh;
 	width: 100%;
 	display: grid;
 	grid-template-rows: 160px 1fr 160px;
