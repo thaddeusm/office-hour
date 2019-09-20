@@ -6,15 +6,16 @@
 	            ref="webrtc"
 	            :roomId="roomId" 
 	            :socketURL="server"
-	            v-on:joined-room="logEvent"
+	            v-on:joined-room="status = 'streaming'"
 	            v-on:left-room="logEvent"
 	            v-on:open-room="logEvent"
 	        >
 	        </vue-webrtc>
 		</header>
 		<main>
-			<button v-if="joined" class="yellow" @click="leaveMeeting">Leave</button>
-			<button v-else class="yellow" @click="joinMeeting">Join</button>
+			<button v-if="status == 'streaming'" class="yellow block-button" @click="leaveMeeting">Leave</button>
+			<Loader size="large" v-else-if="status == 'joined'" />
+			<button v-else-if="status == 'disconnected'" class="yellow block-button" @click="joinMeeting">Join</button>
 		</main>
         <footer>
         	
@@ -26,22 +27,27 @@
 import * as io from 'socket.io-client'
 window.io = io
 
+import Loader from '@/components/Loader.vue'
+
 export default {
 	name: 'Meeting',
+	components: {
+		Loader
+	},
 	data() {
         return {
             roomId: '0000',
             server: 'https://office-hour-server.seatsmart.tech/',
-            joined: false
+            status: 'disconnected'
         }
     },
     methods: {
         joinMeeting() {
-            this.joined = true
+        	this.status = 'joined'
             this.$refs.webrtc.join()
         },
         leaveMeeting() {
-            this.joined = false
+            this.status = 'disconnected'
             this.$refs.webrtc.leave()
         },
         logError(error, stream) {
@@ -109,6 +115,11 @@ button {
   	margin-left: 10px;
   	margin-right: 10px;
   	outline: none;
+}
+
+.block-button {
+	display: block;
+	margin: 0 auto;
 }
 
 .yellow {
