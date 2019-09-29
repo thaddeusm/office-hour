@@ -1,4 +1,5 @@
 # office-hour
+This was a simple experiment with WebRTC.
 
 ## Project setup
 ```
