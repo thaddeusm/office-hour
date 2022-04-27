@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "grunt": "^1.0.4",
+    "grunt": "^1.5.2",
     "vue": "^2.6.10",
     "vue-webrtc": "^1.2.0"
   },
