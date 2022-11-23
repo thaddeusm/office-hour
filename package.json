@@ -11,7 +11,7 @@
     "core-js": "^2.6.5",
     "grunt": "^1.0.4",
     "vue": "^2.6.10",
-    "vue-webrtc": "^1.2.0"
+    "vue-webrtc": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
